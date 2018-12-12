@@ -1,4 +1,5 @@
 import {Tasks} from "./TaskInterface";
+import {searchResult} from "./searchResultInterface";
 
 export class TaskList{
     private theList: Tasks[];
@@ -104,9 +105,8 @@ export class TaskList{
         }
         return result;
     }
+    completeTask(taskID: number, index: number): void{
+        this.theList[index].complete = !this.theList[index].complete;
+    }
 }
 
-interface searchResult{
-    result: Tasks,
-    index: number
-}

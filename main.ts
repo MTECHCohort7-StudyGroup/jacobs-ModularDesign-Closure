@@ -1,6 +1,7 @@
 //gonna make a simple to do list app for node.js
 import {Tasks} from './classes-interfaces/TaskInterface';
 import {TaskList} from "./classes-interfaces/TaskList";
+import {searchResult} from "./classes-interfaces/searchResultInterface";
 
 let sessionList: TaskList = new TaskList;
 
@@ -47,5 +48,30 @@ function nextInvoke():void{
                 nextInvoke();
             }
         }
+    }
+    else if(userInput === "COMPLETE"){
+        alert(sessionList.sayTasks());
+        let taskToComplete: string = prompt("Type the ID of the task you want to complete, or type OOPS to go back");
+        if(taskToComplete === "OOPS"){
+            nextInvoke();
+        }
+        else{
+            let goOn: boolean = Number(taskToComplete)? true: false;
+            if (goOn){
+                let competeTaskID: number = Number(taskToComplete);
+                let completeSearch: searchResult = sessionList.searchTask(competeTaskID);
+                sessionList.completeTask(competeTaskID, completeSearch.index);
+                alert(`You completed ${completeSearch.result.name}`);
+                nextInvoke();
+            }
+            else{
+                alert("You did not type a number");
+                nextInvoke();
+            }
+        }
+    }
+    else{
+        alert("Command not recognized, try again");
+        nextInvoke();
     }
 }
