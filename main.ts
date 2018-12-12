@@ -16,13 +16,14 @@ function createTask(taskName: string,taskDate?: string): Tasks{
 // sessionList.addTask(createTask(prompt("What is your first task? Please note that Oops cannot be a task name.")));
 
 function nextInvoke():void{
-    let userInput: string = prompt("What would you like to do next? Type ADDTASK to add a task, REMOVETASK to remove one, COMPLETE to complete a task, and CHECK to check a task").toUpperCase();
+    let userInput: string = prompt("What would you like to do next? Type ADDTASK to add a task, REMOVETASK to remove one, COMPLETE to complete a task, LOOK to see all tasks, and SEARCH to search for a task").toUpperCase();
     if (userInput === "ADDTASK"){
         let newTaskName: string = prompt("What is the name of the task? Or Type OOPS to go back. Please note that OOPS cannot be a task name.");
         if (newTaskName === "OOPS"){
             nextInvoke();
         }
         else{
+            alert(`You added task: ${newTaskName}`);
             sessionList.addTask(createTask(newTaskName));
             nextInvoke();
         }
@@ -37,6 +38,9 @@ function nextInvoke():void{
             let goOn: boolean = Number(deleteTask)? true: false;
             if (goOn){
                 let deleteTaskID: number = Number(deleteTask);
+                let deletedTask: Tasks = sessionList.removeTask(deleteTaskID);
+                alert(`You deleted the task: ${deletedTask.name}`);
+                nextInvoke();
             }
             else{
                 alert("You did not type a number");
